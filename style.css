@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.calculator {
+    background-color: #240046;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.display {
+    background-color: #10002b;
+    color: #7ABF2C;
+    font-size: 2.5em;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: right;
+    font-family: Orbitron, monospace;
+    font-weight: bold;
+    min-height: 60px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.button-row button {
+    flex: 1;
+}
+
+.button-row .clear {
+    flex-grow: 9;
+}
+
+.button-row .equals {
+    flex-grow: 5;
+}
+
+button {
+    padding: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.digit, .decimal {
+    background-color: #a960e4;
+    color: white;
+}
+
+.operator {
+    background-color: #E3B15F;
+    color: white;
+}
+
+.clear {
+    background-color: #fb6a84;
+    color: white;
+}
+
+.equals {
+    background-color: #8ebc5b;
+    color: white;
+}
