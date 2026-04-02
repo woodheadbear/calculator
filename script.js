@@ -1,6 +1,14 @@
-let firstNum = 0;
-let secondNum = 0;
+let display = document.querySelector(".display");
+const allDigits = document.querySelectorAll(".digit");
+const allOperators = document.querySelectorAll(".operator");
+const equals = document.querySelector(".equals");
+const decimal = document.querySelector(".decimal");
+const clear = document.querySelector(".clear");
+
+let firstNum = "";
+let secondNum = "";
 let operator = "";
+
 
 
 
@@ -35,6 +43,3 @@ function operate(operator, num1, num2) {
 
     return operations[operator](num1, num2);
 }
-
-console.log(operate("@", 5, 3));
-console.log(operate("-", 3, 4));
