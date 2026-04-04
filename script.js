@@ -53,6 +53,14 @@ container.addEventListener("click", (event) => {
             secondNum = "";
             operator = '';
         }
+    } else if (event.target.closest(".clear")) {
+        const clear = event.target.closest(".clear");
+        if (!clear) return;
+
+        firstNum = "";
+        secondNum = "";
+        operator = "";
+        display.textContent = 0;
     };
 });
 
