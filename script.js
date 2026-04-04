@@ -14,16 +14,11 @@ container.addEventListener("click", (event) => {
         if (firstNum && operator) {
             secondNum += digit.textContent;
             display.textContent = secondNum;
-
-            console.log(firstNum, secondNum, operator);
         } else if (firstTimeCalculation) {
             firstNum += digit.textContent;
             display.textContent = firstNum;
-
-            console.log(firstNum, secondNum, operator);
         } else {
-            firstNum = "";
-            firstNum += digit.textContent;
+            firstNum = digit.textContent;
             display.textContent = firstNum;
             firstTimeCalculation = true;
         }
@@ -33,22 +28,17 @@ container.addEventListener("click", (event) => {
 
         if (firstNum && secondNum) {
             firstNum = operate(operator, firstNum, secondNum);
-            display.textContent = firstNum;
+            errorHandler(firstNum);
             operator = operatorButton.textContent;
-
             secondNum = "";
-
-            console.log(firstNum, secondNum, operator);
         } else if (firstNum) {
             operator = operatorButton.textContent;
-
-            console.log(firstNum, secondNum, operator);
         }
 
     } else if (event.target.closest(".equals")) {
         if (firstNum && secondNum && operator) {
             firstNum = operate(operator, firstNum, secondNum);
-            display.textContent = firstNum;
+            errorHandler(firstNum);
             secondNum = "";
             operator = "";
             firstTimeCalculation = false;
@@ -69,16 +59,12 @@ container.addEventListener("click", (event) => {
                 if (!secondNum) secondNum = "0";
                 secondNum += decimal.textContent;
                 display.textContent = secondNum;
-
-                console.log(firstNum, secondNum, operator);
             }
         } else if (firstTimeCalculation) {
             if (!firstNum.includes(decimal.textContent)) {
                 if (!firstNum) firstNum = "0";
                 firstNum += decimal.textContent;
                 display.textContent = firstNum;
-
-                console.log(firstNum, secondNum, operator);
             }
         } else {
             if (!firstNum.includes(decimal.textContent)) {
@@ -86,32 +72,37 @@ container.addEventListener("click", (event) => {
                 firstNum += decimal.textContent;
                 display.textContent = firstNum;
                 firstTimeCalculation = true;
-
-                console.log(firstNum, secondNum, operator);
             }
         }
     };
 });
 
 function add(num1, num2) {
+    const result = Number(num1) + Number(num2);
 
-    return `${Number(num1) + Number(num2)}`;
+    return toRoundNum(result);
 };
 
 function subtract(num1, num2) {
-    return `${Number(num1) - Number(num2)}`;
+    const result = Number(num1) - Number(num2);
+    return toRoundNum(result);
 };
 
 function multiply(num1, num2) {
-    return `${Number(num1) * Number(num2)}`;
+    const result = (Number(num1) * Number(num2));
+
+    return toRoundNum(result);
+
 };
 
 function divide(num1, num2) {
     if (Number(num2) === 0) {
-        display.textContent = "ERROR";
-        return "";
+        return "ERROR";
     }
-    return `${Number(num1) / Number(num2)}`;
+
+    const result = Number(num1) / Number(num2);
+
+    return toRoundNum(result);
 };
 
 function operate(operator, num1, num2) {
@@ -127,4 +118,16 @@ function operate(operator, num1, num2) {
         return "";
     }
     return operations[operator](num1, num2);
+}
+
+function toRoundNum(num) {
+    return String(parseFloat(num.toFixed(5)));
+}
+
+function errorHandler(num) {
+    display.textContent = num;
+
+    if (num === "ERROR") {
+        firstNum = "";
+    }
 }
