@@ -9,7 +9,6 @@ container.addEventListener("click", (event) => {
 
     if (event.target.closest(".digit")) {
         const digit = event.target.closest(".digit");
-        if (!digit) return;
 
         if (firstNum && operator) {
             secondNum += digit.textContent;
@@ -24,7 +23,6 @@ container.addEventListener("click", (event) => {
         }
     } else if (event.target.closest(".operator")) {
         const operatorButton = event.target.closest(".operator");
-        if (!operatorButton) return;
 
         if (firstNum && secondNum) {
             firstNum = operate(operator, firstNum, secondNum);
@@ -40,26 +38,19 @@ container.addEventListener("click", (event) => {
             console.log(firstNum, secondNum, operator);
         }
     } else if (event.target.closest(".equals")) {
-        const equals = event.target.closest(".equals");
-        if (!equals) return;
-
         if (firstNum && secondNum && operator) {
-            firstNum = operate(operator, firstNum, secondNum);
-            display.textContent = firstNum;
+            display.textContent = operate(operator, firstNum, secondNum);
+            firstNum = "";
             secondNum = "";
             operator = '';
         }
     } else if (event.target.closest(".clear")) {
-        const clear = event.target.closest(".clear");
-        if (!clear) return;
-
         firstNum = "";
         secondNum = "";
         operator = "";
         display.textContent = 0;
     } else if (event.target.closest(".decimal")) {
         const decimal = event.target.closest(".decimal");
-        if (!decimal) return;
 
         if (firstNum && operator) {
             if (!secondNum.includes(decimal.textContent)) {
@@ -95,8 +86,8 @@ function multiply(num1, num2) {
 
 function divide(num1, num2) {
     if (Number(num2) === 0) {
-        return showError();
-
+        display.textContent = "ERROR";
+        return "";
     }
     return `${Number(num1) / Number(num2)}`;
 };
@@ -109,15 +100,9 @@ function operate(operator, num1, num2) {
         "/": divide
     };
 
-    if (!(operator in operations)) return showError();
-
+    if (!(operator in operations)) {
+        display.textContent = "ERROR";
+        return showError();
+    }
     return operations[operator](num1, num2);
-}
-
-function showError() {
-    firstNum = "";
-    secondNum = "";
-    operator = "";
-    return display.textContent = "ERROR";
-
 }
