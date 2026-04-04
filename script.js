@@ -1,7 +1,5 @@
 let display = document.querySelector(".display");
-const allDigits = document.querySelectorAll(".digit");
-const allOperators = document.querySelectorAll(".operator");
-const equals = document.querySelector(".equals");
+
 const decimal = document.querySelector(".decimal");
 const clear = document.querySelector(".clear");
 
@@ -44,6 +42,16 @@ container.addEventListener("click", (event) => {
             operator = operatorButton.textContent;
 
             console.log(firstNum, secondNum, operator);
+        }
+    } else if (event.target.closest(".equals")) {
+        const equals = event.target.closest(".equals");
+        if (!equals) return;
+
+        if (firstNum && secondNum && operator) {
+            firstNum = operate(operator, firstNum, secondNum);
+            display.textContent = firstNum;
+            secondNum = "";
+            operator = '';
         }
     };
 });
