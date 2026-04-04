@@ -1,7 +1,4 @@
 let display = document.querySelector(".display");
-const decimal = document.querySelector(".decimal");
-
-
 const container = document.querySelector(".buttons-container");
 
 let firstNum = "";
