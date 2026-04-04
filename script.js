@@ -1,5 +1,6 @@
 let display = document.querySelector(".display");
 const container = document.querySelector(".buttons-container");
+let firstTimeCalculation = true;
 
 let firstNum = "";
 let secondNum = "";
@@ -15,11 +16,15 @@ container.addEventListener("click", (event) => {
             display.textContent = secondNum;
 
             console.log(firstNum, secondNum, operator);
-        } else {
+        } else if (firstTimeCalculation) {
             firstNum += digit.textContent;
             display.textContent = firstNum;
 
             console.log(firstNum, secondNum, operator);
+        } else {
+            firstNum = "";
+            firstNum += digit.textContent;
+            display.textContent = firstNum;
         }
     } else if (event.target.closest(".operator")) {
         const operatorButton = event.target.closest(".operator");
@@ -39,16 +44,18 @@ container.addEventListener("click", (event) => {
         }
     } else if (event.target.closest(".equals")) {
         if (firstNum && secondNum && operator) {
-            display.textContent = operate(operator, firstNum, secondNum);
-            firstNum = "";
+            firstNum = operate(operator, firstNum, secondNum);
+            display.textContent = firstNum;
             secondNum = "";
-            operator = '';
+            operator = "";
+            firstTimeCalculation = false;
         }
     } else if (event.target.closest(".clear")) {
         firstNum = "";
         secondNum = "";
         operator = "";
         display.textContent = 0;
+        firstTimeCalculation = true;
     } else if (event.target.closest(".decimal")) {
         const decimal = event.target.closest(".decimal");
 
@@ -102,7 +109,7 @@ function operate(operator, num1, num2) {
 
     if (!(operator in operations)) {
         display.textContent = "ERROR";
-        return showError();
+        return "";
     }
     return operations[operator](num1, num2);
 }
