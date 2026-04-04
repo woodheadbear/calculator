@@ -1,7 +1,6 @@
 let display = document.querySelector(".display");
-
 const decimal = document.querySelector(".decimal");
-const clear = document.querySelector(".clear");
+
 
 const container = document.querySelector(".buttons-container");
 
@@ -61,27 +60,48 @@ container.addEventListener("click", (event) => {
         secondNum = "";
         operator = "";
         display.textContent = 0;
+    } else if (event.target.closest(".decimal")) {
+        const decimal = event.target.closest(".decimal");
+        if (!decimal) return;
+
+        if (firstNum && operator) {
+            if (!secondNum.includes(decimal.textContent)) {
+                secondNum += decimal.textContent;
+                display.textContent = secondNum;
+
+                console.log(firstNum, secondNum, operator);
+            }
+
+        } else {
+            if (!firstNum.includes(decimal.textContent)) {
+                firstNum += decimal.textContent;
+                display.textContent = firstNum;
+
+                console.log(firstNum, secondNum, operator);
+            }
+        }
     };
 });
 
 function add(num1, num2) {
 
-    return Number(num1) + Number(num2);
+    return `${Number(num1) + Number(num2)}`;
 };
 
 function subtract(num1, num2) {
-    return Number(num1) - Number(num2);
+    return `${Number(num1) - Number(num2)}`;
 };
 
 function multiply(num1, num2) {
-    return Number(num1) * Number(num2);
+    return `${Number(num1) * Number(num2)}`;
 };
 
 function divide(num1, num2) {
     if (Number(num2) === 0) {
-        return "Error: Division by zero is not allowed.";
+        return showError();
+
     }
-    return Number(num1) / Number(num2);
+    return `${Number(num1) / Number(num2)}`;
 };
 
 function operate(operator, num1, num2) {
@@ -92,7 +112,15 @@ function operate(operator, num1, num2) {
         "/": divide
     };
 
-    if (!(operator in operations)) return "ERROR";
+    if (!(operator in operations)) return showError();
 
     return operations[operator](num1, num2);
+}
+
+function showError() {
+    firstNum = "";
+    secondNum = "";
+    operator = "";
+    return display.textContent = "ERROR";
+
 }
