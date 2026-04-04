@@ -25,7 +25,9 @@ container.addEventListener("click", (event) => {
             firstNum = "";
             firstNum += digit.textContent;
             display.textContent = firstNum;
+            firstTimeCalculation = true;
         }
+
     } else if (event.target.closest(".operator")) {
         const operatorButton = event.target.closest(".operator");
 
@@ -42,6 +44,7 @@ container.addEventListener("click", (event) => {
 
             console.log(firstNum, secondNum, operator);
         }
+
     } else if (event.target.closest(".equals")) {
         if (firstNum && secondNum && operator) {
             firstNum = operate(operator, firstNum, secondNum);
@@ -50,27 +53,39 @@ container.addEventListener("click", (event) => {
             operator = "";
             firstTimeCalculation = false;
         }
+
     } else if (event.target.closest(".clear")) {
         firstNum = "";
         secondNum = "";
         operator = "";
         display.textContent = 0;
         firstTimeCalculation = true;
+
     } else if (event.target.closest(".decimal")) {
         const decimal = event.target.closest(".decimal");
 
         if (firstNum && operator) {
             if (!secondNum.includes(decimal.textContent)) {
+                if (!secondNum) secondNum = "0";
                 secondNum += decimal.textContent;
                 display.textContent = secondNum;
 
                 console.log(firstNum, secondNum, operator);
             }
-
-        } else {
+        } else if (firstTimeCalculation) {
             if (!firstNum.includes(decimal.textContent)) {
+                if (!firstNum) firstNum = "0";
                 firstNum += decimal.textContent;
                 display.textContent = firstNum;
+
+                console.log(firstNum, secondNum, operator);
+            }
+        } else {
+            if (!firstNum.includes(decimal.textContent)) {
+                firstNum = "0";
+                firstNum += decimal.textContent;
+                display.textContent = firstNum;
+                firstTimeCalculation = true;
 
                 console.log(firstNum, secondNum, operator);
             }
