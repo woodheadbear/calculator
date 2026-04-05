@@ -33,7 +33,6 @@ container.addEventListener("click", (event) => {
             display.textContent = secondNum;
         } else if (firstTimeCalculation) {
             firstNum = checkNumLength(firstNum, digit);
-            console.log(firstNum);
             display.textContent = firstNum;
         } else {
             firstNum = checkNumLength("", digit);
@@ -169,7 +168,6 @@ function errorHandler(num) {
 
 function checkNumLength(num, button) {
     if (num === "LONGINPUT") {
-        console.log("here");
         return button.textContent;
     } else if (num.length < DISPLAY_CAPACITY) {
         return num += button.textContent;
