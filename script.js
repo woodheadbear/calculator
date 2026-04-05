@@ -1,4 +1,4 @@
-const DISPLAY_CAPACITY = 10;
+const DISPLAY_CAPACITY = 9;
 
 let display = document.querySelector(".display");
 const container = document.querySelector(".buttons-container");
