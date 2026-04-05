@@ -20,7 +20,7 @@ container.addEventListener("click", (event) => {
             firstNum = checkNumLength(firstNum, digit);
             display.textContent = firstNum;
         } else {
-            firstNum = checkNumLength(firstNum, digit);
+            firstNum = checkNumLength("", digit);
             display.textContent = firstNum;
             firstTimeCalculation = true;
         }
@@ -76,7 +76,21 @@ container.addEventListener("click", (event) => {
                 firstTimeCalculation = true;
             }
         }
-    };
+    } else if (event.target.closest(".backspace")) {
+        if (firstNum && operator) {
+            if (secondNum) {
+                secondNum = removeLastDigit(secondNum);
+                display.textContent = secondNum ? secondNum : "0";
+            }
+
+        } else if (firstTimeCalculation) {
+            if (firstNum) {
+                firstNum = removeLastDigit(firstNum);
+                display.textContent = firstNum ? firstNum : "0";
+            }
+
+        };
+    }
 });
 
 function add(num1, num2) {
@@ -145,5 +159,9 @@ function checkNumLength(num, button) {
     } else {
         return "LONGINPUT";
     }
+}
+
+function removeLastDigit(num) {
+    return num.slice(0, -1);
 }
 

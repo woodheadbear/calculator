@@ -55,7 +55,7 @@ body {
 }
 
 .button-row .clear {
-    flex-grow: 9;
+    flex-grow: 5;
 }
 
 .button-row .equals {
@@ -70,28 +70,31 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
+    color: white;
+
 }
 
 button:hover {
     opacity: 0.9;
 }
 
-.digit, .decimal {
+.digit,
+.decimal {
     background-color: #a960e4;
-    color: white;
 }
 
 .operator {
     background-color: #E3B15F;
-    color: white;
 }
 
 .clear {
     background-color: #fb6a84;
-    color: white;
 }
 
 .equals {
     background-color: #8ebc5b;
-    color: white;
+}
+
+.backspace {
+    background-color: #fb6a84;
 }
