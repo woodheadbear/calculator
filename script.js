@@ -1,15 +1,30 @@
-const DISPLAY_MAX_SHOW = 10;
+const DISPLAY_CAPACITY = 10;
 
 let display = document.querySelector(".display");
 const container = document.querySelector(".buttons-container");
+const buttons = container.querySelectorAll("button");
+const listOfButtons = Array.from(buttons);
 let firstTimeCalculation = true;
 
 let firstNum = "";
 let secondNum = "";
 let operator = "";
 
-container.addEventListener("click", (event) => {
+document.addEventListener("keydown", (event) => {
+    let keyName = event.key;
+    if (keyName === "Enter") {
+        keyName = "=";
+    } else if (keyName === "Backspace") {
+        keyName = "←";
+    } else if (keyName === "Escape") {
+        keyName = "Clear";
+    }
 
+    let pressedButton = listOfButtons.find(item => item.textContent.includes(keyName));
+    if (pressedButton) pressedButton.click();
+});
+
+container.addEventListener("click", (event) => {
     if (event.target.closest(".digit")) {
         const digit = event.target.closest(".digit");
 
@@ -141,7 +156,7 @@ function toRoundNum(num) {
 }
 
 function errorHandler(num) {
-    if (num.length > DISPLAY_MAX_SHOW) {
+    if (num.length > DISPLAY_CAPACITY) {
         num = "LONGOUTPUT";
     }
     display.textContent = num;
@@ -152,7 +167,7 @@ function errorHandler(num) {
 }
 
 function checkNumLength(num, button) {
-    if (num.length < DISPLAY_MAX_SHOW) {
+    if (num.length < DISPLAY_CAPACITY) {
         return num += button.textContent;
     } else if (num === "LONGINPUT") {
         return button.textContent;
