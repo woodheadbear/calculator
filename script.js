@@ -1,3 +1,5 @@
+const DISPLAY_MAX_SHOW = 10;
+
 let display = document.querySelector(".display");
 const container = document.querySelector(".buttons-container");
 let firstTimeCalculation = true;
@@ -12,13 +14,13 @@ container.addEventListener("click", (event) => {
         const digit = event.target.closest(".digit");
 
         if (firstNum && operator) {
-            secondNum += digit.textContent;
+            secondNum = checkNumLength(secondNum, digit);
             display.textContent = secondNum;
         } else if (firstTimeCalculation) {
-            firstNum += digit.textContent;
+            firstNum = checkNumLength(firstNum, digit);
             display.textContent = firstNum;
         } else {
-            firstNum = digit.textContent;
+            firstNum = checkNumLength(firstNum, digit);
             display.textContent = firstNum;
             firstTimeCalculation = true;
         }
@@ -57,19 +59,19 @@ container.addEventListener("click", (event) => {
         if (firstNum && operator) {
             if (!secondNum.includes(decimal.textContent)) {
                 if (!secondNum) secondNum = "0";
-                secondNum += decimal.textContent;
+                secondNum = checkNumLength(secondNum, decimal);
                 display.textContent = secondNum;
             }
         } else if (firstTimeCalculation) {
             if (!firstNum.includes(decimal.textContent)) {
                 if (!firstNum) firstNum = "0";
-                firstNum += decimal.textContent;
+                firstNum = checkNumLength(firstNum, decimal);
                 display.textContent = firstNum;
             }
         } else {
             if (!firstNum.includes(decimal.textContent)) {
                 firstNum = "0";
-                firstNum += decimal.textContent;
+                firstNum = checkNumLength(firstNum, decimal);
                 display.textContent = firstNum;
                 firstTimeCalculation = true;
             }
@@ -125,9 +127,23 @@ function toRoundNum(num) {
 }
 
 function errorHandler(num) {
+    if (num.length > DISPLAY_MAX_SHOW) {
+        num = "LONGOUTPUT";
+    }
     display.textContent = num;
 
-    if (num === "ERROR") {
+    if (num === "ERROR" || num === "LONGOUTPUT") {
         firstNum = "";
     }
 }
+
+function checkNumLength(num, button) {
+    if (num.length < DISPLAY_MAX_SHOW) {
+        return num += button.textContent;
+    } else if (num === "LONGINPUT") {
+        return button.textContent;
+    } else {
+        return "LONGINPUT";
+    }
+}
+
